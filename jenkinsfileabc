@@ -1,0 +1,16 @@
+node{
+properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '5')), pipelineTriggers([cron('* * * * *')])])
+def mavenHome = tool name: "maven3.9.1"
+    stage ('checkout source code'){
+       git 'https://github.com/nani0231/maven-web-application.git' 
+    }
+    stage ('maven build'){
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+   /* stage ('code quality'){
+        sh "${mavenHome}/bin/mvn clean sonar:sonar"
+    }*/
+    /*stage ('artifacts'){
+        sh "${mavenHome}/bin/mvn deploy"
+    }*/
+}
